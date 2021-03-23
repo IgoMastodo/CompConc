@@ -1,2 +1,2 @@
-# CompConc2020.1
+# CompConc
 Repositório dos códigos do curso de Computação Concorrente
