@@ -66,7 +66,7 @@ int main(void){
             printf("--ERRO: malloc()\n"); exit(-1);
         }
         arg->idThread = thread;  
-        arg->vetor = vector; // tentar com arg não sendo pointer
+        arg->vetor = vector;
         //arg->vetor
         printf("--Cria a thread %d\n", thread);
         if (pthread_create(&tid[thread], NULL, tarefa, (void*) arg)) {
@@ -83,5 +83,5 @@ int main(void){
     printf("\nValores finais do vetor com %d espaços: \n", VECTORSIZE);
     for(int i=0; i<VECTORSIZE; i++) printf(" %d ", vector[i]);
     
-    printf("\n Fim da execução"); 
+    printf("\n Fim da execução\n"); 
 }
