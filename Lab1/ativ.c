@@ -81,8 +81,8 @@ int main(void){
     for (int i=0; i<VECTORSIZE; i++) {
         if(arg->vetor[i]!=1) { printf("--ERRO: SOMA)\n"); exit(-1); }
     }
-    printf("\nValores finais do vetor com %d espaços: \n", VECTORSIZE);
+    /* printf("\nValores finais do vetor com %d espaços: \n", VECTORSIZE);
     for(int i=0; i<VECTORSIZE; i++) printf(" %d ", vector[i]);
-    
+    */
     printf("\n Fim da execução\n"); 
 }
