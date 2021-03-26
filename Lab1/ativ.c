@@ -49,8 +49,8 @@ int main(void){
     for (int i=0; i<VECTORSIZE; i++) vector[i]=0;
     
     // mostrar o estado inicial do vetor
-    printf("Valores iniciais do vetor com %d espaços: \n", VECTORSIZE);
-    for(int i=0; i<VECTORSIZE; i++) printf(" %d ", vector[i]);    
+    /* printf("Valores iniciais do vetor com %d espaços: \n", VECTORSIZE);
+    for(int i=0; i<VECTORSIZE; i++) printf(" %d ", vector[i]); */    
    
     printf("\n");   
 
