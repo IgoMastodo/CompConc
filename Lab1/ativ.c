@@ -24,9 +24,9 @@ void* tarefa (void* arg) {
     }  
   }
   else{
-    for (int i=VECTORSIZE/2; i<VECTORSIZE; i++) {
-        printf("Posição %d do vetor icrementada para %d\n", i, args->vetor[i]);
+    for (int i=VECTORSIZE/2; i<VECTORSIZE; i++) {   
         args->vetor[i]++;
+        printf("Posição %d do vetor icrementada para %d\n", i, args->vetor[i]);
     }  
   }
   free(arg); //aqui pode liberar a alocacao feita na main
