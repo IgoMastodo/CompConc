@@ -21,16 +21,12 @@ void* tarefa (void* arg) {
     for (int i=0; i<VECTORSIZE/2; i++) {
         args->vetor[i]++;
         printf("Posição %d do vetor icrementada para %d\n", i, args->vetor[i]);
-        if(args->vetor[i]!=1) { printf("--ERRO: SOMA)\n"); exit(-1);
-        }
     }  
   }
   else{
     for (int i=VECTORSIZE/2; i<VECTORSIZE; i++) {
         printf("Posição %d do vetor icrementada para %d\n", i, args->vetor[i]);
         args->vetor[i]++;
-        if(args->vetor[i]!=1) { printf("--ERRO: SOMA)\n"); exit(-1);
-        }
     }  
   }
   free(arg); //aqui pode liberar a alocacao feita na main
@@ -79,6 +75,11 @@ int main(void){
          if (pthread_join(tid[thread], NULL)) {
          printf("--ERRO: pthread_join() \n"); exit(-1); 
          } 
+    }
+   
+    // verificação dos valores do vetor
+    for (int i=0; i<VECTORSIZE; i++) {
+        if(args->vetor[i]!=1) { printf("--ERRO: SOMA)\n"); exit(-1); }
     }
     printf("\nValores finais do vetor com %d espaços: \n", VECTORSIZE);
     for(int i=0; i<VECTORSIZE; i++) printf(" %d ", vector[i]);
