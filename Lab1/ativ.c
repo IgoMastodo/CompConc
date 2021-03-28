@@ -63,7 +63,7 @@ int main(void){
         }
         arg->idThread = thread;  
         arg->vetor = vector;
-        //arg->vetor
+       
         printf("--Cria a thread %d\n", thread);
         if (pthread_create(&tid[thread], NULL, tarefa, (void*) arg)) {
         printf("--ERRO: pthread_create()\n"); exit(-1);
