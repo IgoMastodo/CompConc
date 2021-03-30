@@ -2,7 +2,7 @@
 #include <stdlib.h> 
 #include <pthread.h>
 
-#define VECTORSIZE 25
+#define VECTORSIZE 10000
 
 //cria a estrutura de dados para armazenar os argumentos da thread
 typedef struct {
