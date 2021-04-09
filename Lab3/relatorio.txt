@@ -15,3 +15,76 @@ Atividade 2)
 3.
 
 4.
+
+
+Alguns outputs obtidos:
+
+igor@ubuntu:~/dev/Lab3$ ./calcpi 10 4
+
+Valor de pi (sequencial): 3.041839618929402
+Diferenca entre a constante M_PI e o calculado: 0.099753034660391
+Tempo usado na soma sequencial: 0.000011
+
+Valor de pi (concorrente): 3.041839618929402
+Diferenca entre a constante M_PI  e o calculado: 0.099753034660391
+Tempo usado na soma concorrente: 0.000369
+
+igor@ubuntu:~/dev/Lab3$ ./calcpi 100 4
+
+Valor de pi (sequencial): 3.131592903558553
+Diferenca entre a constante M_PI e o calculado: 0.009999750031240
+Tempo usado na soma sequencial: 0.000014
+
+Valor de pi (concorrente): 3.131592903558553
+Diferenca entre a constante M_PI  e o calculado: 0.009999750031240
+Tempo usado na soma concorrente: 0.000436
+
+igor@ubuntu:~/dev/Lab3$ ./calcpi 1000 4
+
+Valor de pi (sequencial): 3.140592653839793
+Diferenca entre a constante M_PI e o calculado: 0.000999999750000
+Tempo usado na soma sequencial: 0.000030
+
+Valor de pi (concorrente): 3.140592653839793
+Diferenca entre a constante M_PI  e o calculado: 0.000999999750000
+Tempo usado na soma concorrente: 0.000444
+
+igor@ubuntu:~/dev/Lab3$ ./calcpi 1000000 4
+
+Valor de pi (sequencial): 3.141591653589793
+Diferenca entre a constante M_PI e o calculado: 0.000001000000000
+Tempo usado na soma sequencial: 0.017248
+
+Valor de pi (concorrente): 3.141591653589793
+Diferenca entre a constante M_PI  e o calculado: 0.000001000000000
+Tempo usado na soma concorrente: 0.005630
+
+igor@ubuntu:~/dev/Lab3$ ./calcpi 10000000 4
+
+Valor de pi (sequencial): 3.141592553589793
+Diferenca entre a constante M_PI e o calculado: 0.000000100000000
+Tempo usado na soma sequencial: 0.175018
+
+Valor de pi (concorrente): 3.141592553589793
+Diferenca entre a constante M_PI  e o calculado: 0.000000100000000
+Tempo usado na soma concorrente: 0.082958
+
+igor@ubuntu:~/dev/Lab3$ ./calcpi 100000000 4
+
+Valor de pi (sequencial): 3.141592643589794
+Diferenca entre a constante M_PI e o calculado: 0.000000009999999
+Tempo usado na soma sequencial: 1.719978
+
+Valor de pi (concorrente): 3.141592643589793
+Diferenca entre a constante M_PI  e o calculado: 0.000000010000000
+Tempo usado na soma concorrente: 0.493115
+
+igor@ubuntu:~/dev/Lab3$ ./calcpi 6000000000 4
+
+Valor de pi (sequencial): 3.141592653987289
+Diferenca entre a constante M_PI e o calculado: -0.000000000397496
+Tempo usado na soma sequencial: 29.239047
+
+Valor de pi (concorrente): 3.141592653003296
+Diferenca entre a constante M_PI  e o calculado: 0.000000000586497
+Tempo usado na soma concorrente: 7.740041
