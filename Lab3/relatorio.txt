@@ -6,9 +6,10 @@ Atividade 1)
 
 2. - código -
 
-3. O valor obtido se aproxima mais de pi conforme o número de chamadas da série aumenta. Porém em certo ponto, aparentemente por algum erro na soma, 
-o valor obtido para PI ultrapassa a constante M_PI, visto que obtemos uma subtração com valor negativo. 
-Provavelmente o erro acontece por alguma limitação da representação do número. Podemos perceber que há uma limitação no cálculo de PI utilizando esse método.  
+3. O valor obtido se aproxima mais de PI conforme o número de chamadas da série aumenta. Porém em certo ponto, aparentemente por algum erro na soma, 
+o valor obtido pela série ultrapassa a constante M_PI, visto que obtemos uma subtração com valor negativo. 
+Provavelmente o erro acontece por alguma limitação da representação do número. Podemos perceber que, em certa medida, existe imprecisão no cálculo de 
+PI utilizando esse método.  
 
 Atividade 2)
 
