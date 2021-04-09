@@ -8,8 +8,8 @@ Atividade 1)
 
 3. O valor obtido se aproxima mais de PI conforme o número de chamadas da série aumenta. Porém em certo ponto, aparentemente por algum erro na soma, 
 o valor obtido pela série ultrapassa a constante M_PI, visto que obtemos uma subtração com valor negativo. 
-Provavelmente o erro acontece por alguma limitação da representação do número. Podemos perceber que, em certa medida, existe imprecisão no cálculo de 
-PI utilizando esse método.  
+Provavelmente o erro acontece por alguma limitação da representação dos valores em ponto flutuante e se agrava no momento das somas consecutivas. 
+Podemos perceber que, em certa medida, existe imprecisão no cálculo de PI utilizando esse método, mas não exclusivamente por ser uma solução sequencial.
 
 Atividade 2)
 
