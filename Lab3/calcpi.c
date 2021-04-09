@@ -56,7 +56,7 @@ int main(int argc, char* argv[]){
     printf("Tempo usado na soma sequencial: %lf\n",delta);
     puts("");
 
-    // chamada das threads
+    // versao concorrente
     GET_TIME(ini);
     tid = (pthread_t*) malloc(sizeof(pthread_t) * nthreads);
     if(tid==NULL){
