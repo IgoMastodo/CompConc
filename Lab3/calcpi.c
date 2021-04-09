@@ -24,16 +24,17 @@ void* tarefa(void* arg){
     for(long int i=ini; i<fim; i++)  *somaLocal +=  4 * (( pow(-1,((long double) i)) ) * 1/( 2*i + 1));
 
 
-    pthread_exit((void*) somaLocal); // temos que dar cast para void* aqui, pegamos esse valor com o join
+    pthread_exit((void*) somaLocal); 
 
 }
 
 int main(int argc, char* argv[]){
 
-    long double somaConc=0;     // identificadores das threads no sistema
+    long double somaConc=0;     
     double ini, fim, delta;
     pthread_t* tid;
     long double* retorno, dif;
+    
     // leitura e avaliacao dos parametros de entrada
     if(argc<3){
         fprintf(stderr,"Digite: %s <numero de iteracoes> <numero de threads>\n", argv[0]);
