@@ -6,7 +6,9 @@ Atividade 1)
 
 2. - código -
 
-3. O valor obtido se aproxima mais de pi conforme o número de chamadas da série aumenta. Porém em certo ponto, aparentemente por algum erro na soma, o valor obtido para PI ultrapassa a constante M_PI, visto que obtemos uma subtração com valor negativo. Provavelmente o erro acontece por alguma limitação da representação do número. Podemos perceber que há uma limitação no cálculo de PI utilizando esse método.  
+3. O valor obtido se aproxima mais de pi conforme o número de chamadas da série aumenta. Porém em certo ponto, aparentemente por algum erro na soma, 
+o valor obtido para PI ultrapassa a constante M_PI, visto que obtemos uma subtração com valor negativo. 
+Provavelmente o erro acontece por alguma limitação da representação do número. Podemos perceber que há uma limitação no cálculo de PI utilizando esse método.  
 
 Atividade 2)
 
@@ -14,11 +16,14 @@ Atividade 2)
 
 2. - código -
 
-3. Observando os resultados obtidos percebe-se que com poucas chamadas da série não há tanta diferença entre a versão concorrente e sequencial, ao menos nas casas decimais maiores, visto que estamos mostrando apenas as 15 primeiras.
+3. Observando os resultados obtidos percebe-se que com poucas chamadas da série não há tanta diferença entre a versão concorrente e sequencial, 
+ao menos nas casas decimais maiores, visto que estamos mostrando apenas as 15 primeiras.
 
-4. O ganho de desempenho da versão concorrente em relação a sequencial é notável a partir da ordem de 1000000 chamadas da série. Podemos observar no caso de 6000000000 chamadas que utilizando 4 threads obtivemos um ganho de 29.2 segundos para 7.7 segundos, praticamente 1/4 do tempo sequencial.
+4. O ganho de desempenho da versão concorrente em relação a sequencial é notável a partir da ordem de 1000000 chamadas da série. Podemos observar no caso 
+de 6000000000 chamadas que utilizando 4 threads obtivemos um ganho de 29.2 segundos para 7.7 segundos, praticamente 1/4 do tempo sequencial.
 
-OBS: Podemos concluir que a diferença de precisão do valor de PI não é tão significativa comparando os dois casos, porém a versão concorrente se mostra muito mais vantajosa no aspecto de ganho de tempo de processamento. 
+OBS: Podemos concluir que a diferença de precisão do valor de PI não é tão significativa comparando os dois casos, porém a versão concorrente se mostra muito 
+mais vantajosa no aspecto de ganho de tempo de processamento. 
 
 Alguns outputs obtidos:
 
