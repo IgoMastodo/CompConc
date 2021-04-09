@@ -20,11 +20,9 @@ void* tarefa(void* arg){
     if(id==nthreads-1) fim = it;
     else fim = ini + tamBloco;  
     
-    //printf("Thread %ld\n",id);
 
     for(long int i=ini; i<fim; i++)  *somaLocal +=  4 * (( pow(-1,((long double) i)) ) * 1/( 2*i + 1));
 
-    //printf("%.Lf\n",*somaLocal);
 
     pthread_exit((void*) somaLocal); // temos que dar cast para void* aqui, pegamos esse valor com o join
 
