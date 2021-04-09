@@ -43,7 +43,21 @@ int main(int argc, char* argv[]){
     }
     it = atoi(argv[1]);
     nthreads = atoi(argv[2]);
-    
+
+    // versao sequencial
+    GET_TIME(ini); 
+    for(int i=0; i<it; i++){
+        pi += 4 * (( pow(-1,((double) i)) ) * 1/( 2*i + 1));
+    }
+    GET_TIME(fim);
+    delta= fim - ini;
+    dif = M_PI - pi;
+    puts("");
+    printf("Valor de pi (sequencial): %.15Lf\n",pi);
+    printf("Diferenca entre a constante M_PI e o calculado: %.15Lf\n",dif);
+    printf("Tempo usado na soma sequencial: %lf\n",delta);
+    puts("");
+
     // chamada das threads
     GET_TIME(ini);
     tid = (pthread_t*) malloc(sizeof(pthread_t) * nthreads);
@@ -69,26 +83,14 @@ int main(int argc, char* argv[]){
         free(retorno);
     }
     GET_TIME(fim);
-    pi=somaConc;
-    delta=fim-ini;
+
+    pi = somaConc;
+    delta = fim-ini;
     dif = M_PI- pi;
     printf("Valor de pi (concorrente): %.15Lf\n",pi);
     printf("Diferenca entre a constante M_PI  e o calculado: %.15Lf\n",dif);
     printf("Tempo usado na soma concorrente: %lf\n",delta);
     puts("");
-    pi=0;
-    // versao sequencial
-    GET_TIME(ini); 
-    for(int i=0; i<it; i++){
-        pi += 4 * (( pow(-1,((double) i)) ) * 1/( 2*i + 1));
-    }
-    GET_TIME(fim);
-    delta=fim-ini;
-    dif = M_PI - pi;
-    printf("Valor de pi (sequencial): %.15Lf\n",pi);
-    printf("Diferenca entre a constante M_PI e o calculado: %.15Lf\n",dif);
-    printf("Tempo usado na soma sequencial: %lf\n",delta);
-    
 
     free(tid);
     
