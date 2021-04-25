@@ -211,6 +211,11 @@ int main(int argc, char** argv) {
             exit(1);
         }
         switch(tipo_funcao) {
+            case 3: // verifica se os valores passados para a função logarítmica são coerentes
+              if(limInf <= 0.0 || limSup <= 0.0 || strtod(argv[7], &avulso) <= 0.0) {
+                como_usar();
+                exit(1);
+              }
             case 2:
             case 4:
             case 5:
@@ -218,11 +223,6 @@ int main(int argc, char** argv) {
                     como_usar();
                     exit(1);
                 }
-            case 3: // verifica se os valores passados para a função logarítmica são coerentes
-              if(limInf < 1.0 || limSup < 1.0 || strtod(argv[7], &avulso) > 0.0) {
-                como_usar();
-                exit(1);
-              }
             case 1:
                 i = 6;
                 termos_funcao = (double *) malloc((argc-6)*sizeof(double));
