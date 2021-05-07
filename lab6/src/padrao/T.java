@@ -12,6 +12,5 @@ class T extends Thread {
 	  public void run(){
 	    this.soma.opSoma(this.id);
 	  }
-	  
 	 
 	}
