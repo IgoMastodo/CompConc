@@ -66,7 +66,7 @@ int main(int argc, char *argv[]) {
   //cria as tres threads
   if (pthread_create(&tid[1], NULL, t2, (void *)id[1])) { printf("--ERRO: pthread_create()\n"); exit(-1); }
   if (pthread_create(&tid[2], NULL, t3, (void *)id[2])) { printf("--ERRO: pthread_create()\n"); exit(-1); }
-  if (pthread_create(&tid[3], NULL, t4, (void *)id[0])) { printf("--ERRO: pthread_create()\n"); exit(-1); }
+  if (pthread_create(&tid[3], NULL, t4, (void *)id[3])) { printf("--ERRO: pthread_create()\n"); exit(-1); }
   if (pthread_create(&tid[0], NULL, t1, (void *)id[0])) { printf("--ERRO: pthread_create()\n"); exit(-1); }
 
 
