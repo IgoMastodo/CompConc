@@ -1,73 +1,65 @@
+#include <stdlib.h>
 #include <pthread.h>
 #include "escritaprior.h"
 
-
-void inicializaControle(Controle** ctrl){
- 
+// Funcao para inicializar a estrutura de controle , os mecanismos de sincronização de threads e variaveis auxiliares para as devidas condicoes
+void inicializaCtrlLeituraEscrita(Controle** ctrl) {
+    (*ctrl) = (Controle *) malloc(sizeof(Controle));
+    (*ctrl)->qtd_leitoras = 0;
+    (*ctrl)->qtd_escritoras = 0;
+    (*ctrl)->querem_escrever = 0;
+    //inicializa as variaveis de sincronizacao
+    pthread_mutex_init(&((*ctrl)->totem), NULL);
+    pthread_cond_init(&((*ctrl)->cond_leit), NULL);
+    pthread_cond_init(&((*ctrl)->cond_escr), NULL);
 }
-void finalizaControle(Controle** ctrl){
-   
+// Funcao para desalocar a estrutura de controle e liberar os mecanismos de sincronizacao de threads
+void terminaCtrlLeituraEscrita(Controle** ctrl) {
+    pthread_mutex_destroy(&((*ctrl)->totem));
+    pthread_cond_destroy(&((*ctrl)->cond_leit));
+    pthread_cond_destroy(&((*ctrl)->cond_escr));
+    free(*(ctrl));
 }
-void entraEscrita() {
-
-}
-void saiEscrita() {
-
-}
-void entraLeitura() {
-
-}
-void saiLeitura() {
-
-}
-// funcao das threads
-void *leitor (void *arg) {
-    while(1) {
-        EntraLeitura();
-        //le algo...
-        SaiLeitura();
-        //faz outra coisa...
-        }
-    }
-void *escritor (void *arg) {
-    while(1) {
-    EntraEscrita();
-    //escreve algo...
-    SaiEscrita();
-    //faz outra coisa...
-    }
-}
-int leit=0, escr=0; //globais
-
+//Funcoes para leitura, no caso eh o atuador, recebem ponteiro para a struct controle 
 void EntraLeitura(Controle* ctrl) {
-    pthread_mutex_lock(&mutex);
-    while(escr > 0 && ctrl->querem_escrever > 0) {
-        pthread_cond_wait(&cond_leit, &mutex);
+    pthread_mutex_lock(&(ctrl->totem));           // totem sera utilizado como essa variavel
+    // bloqueia também caso tenha threads querendo escrever, assim implementando prioridade para escrita
+    while(ctrl->qtd_escritoras > 0 || ctrl->querem_escrever > 0) {
+        pthread_cond_wait(&(ctrl->cond_leit), &(ctrl->totem));
     }
-    leit++;
-    pthread_mutex_unlock(&mutex);
+    ctrl->qtd_leitoras++;
+    pthread_mutex_unlock(&(ctrl->totem));
 }
 void SaiLeitura(Controle* ctrl) {
-    pthread_mutex_lock(&mutex);
-    leit--;
-    if(leit==0) pthread_cond_signal(&cond_escr);
-    pthread_mutex_unlock(&mutex);
+    pthread_mutex_lock(&(ctrl->totem));
+    ctrl->qtd_leitoras--;
+    if(ctrl->qtd_leitoras == 0) pthread_cond_signal(&(ctrl->cond_escr));
+    pthread_mutex_unlock(&(ctrl->totem));
 }
-//Funcoes para escrita
-int leit=0, escr=0; //globais
-void EntraEscrita (Controle* ctrl) {
-    pthread_mutex_lock(&mutex);
-    while((leit>0) || (escr>0)) {
-        pthread_cond_wait(&cond_escr, &mutex);
+
+//Funcoes para escrita, no caso eh o sensor, recebem ponteiro para a struct controle 
+void EntraEscrita(Controle* ctrl) {
+    pthread_mutex_lock(&(ctrl->totem));
+    // antes de entrar no while sinaliza aumentando a quantidade de threads querendo escrever
+    ctrl->querem_escrever++;
+    while((ctrl->qtd_leitoras > 0) || (ctrl->qtd_escritoras > 0)) {
+        pthread_cond_wait(&(ctrl->cond_escr), &(ctrl->totem));
     }
-    escr++;
-    pthread_mutex_unlock(&mutex);
+    ctrl->qtd_escritoras++;
+    // ao sair do while diminui a quantidade de threads querendo escrever, uma vez que foi liberada para escrita
+    ctrl->querem_escrever--;
+    pthread_mutex_unlock(&(ctrl->totem));
 }
-void SaiEscrita (Controle* ctrl) {
-    pthread_mutex_lock(&mutex);
-    escr--;
-    pthread_cond_signal(&cond_escr);
-    pthread_cond_broadcast(&cond_leit);
-    pthread_mutex_unlock(&mutex);
+void SaiEscrita(Controle* ctrl) {
+    pthread_mutex_lock(&(ctrl->totem));
+    ctrl->qtd_escritoras--;
+    // se não possui nenhuma thread querendo escrever no momento da saída da escrita, libera para as threads que querem ler, ou seja, forçando que uma prioridade para escrita a partir da liberação para leitura apenas se não tiver threads querendo escrever
+    if(qtd->querem_escrever == 0) {
+      pthread_cond_broadcast(&(ctrl->cond_leit));
+    } else {
+    // libera para escrita enquanto tiver threads querendo escrever, assim sendo uma prioridade para escrita
+      pthread_cond_signal(&(ctrl->cond_escr));
+    }
+    pthread_mutex_unlock(&(ctrl->totem));
 }
 
