@@ -12,7 +12,7 @@ sem_t condt2t3, condt1;     //semaforos para sincronizar a ordem de execucao das
 //funcao executada pela thread 1
 void *t1 (void *threadid) {
   int *tid = (int*) threadid;
-  sem_wait(&condt1); //espera T1 executar
+  sem_wait(&condt1); //espera T2 e T3 executar
   printf("Volte sempre!\n");
   pthread_exit(NULL);
 }
@@ -23,19 +23,19 @@ void *t2 (void *threadid) {
   sem_wait(&condt2t3); //espera T1 executar
   printf("Sente-se por favor.\n");
   x++;
-  sem_post(&condt2t3);
-  if(x==2) sem_post(&condt1); //saida da secao critica
+  sem_post(&condt2t3);	//libera T3 para executar, caso seja a primeira a rodar
+  if(x==2) sem_post(&condt1);  //saida da secao critica, libera a ultima thread caso a thread 3 ja tenha rodado antes
   pthread_exit(NULL);
 }
 
 //funcao executada pela thread 3
 void *t3 (void *threadid) {
   int *tid = (int*) threadid;
-  sem_wait(&condt2t3); //espera T2 executar
+  sem_wait(&condt2t3); //espera T1 executar
   printf("Fique a vontade.\n");
   x++;
-  sem_post(&condt2t3);
-  if(x==2) sem_post(&condt1); //saida da secao critica
+  sem_post(&condt2t3);//libera T2 para executar, caso seja a primeira a rodar
+  if(x==2) sem_post(&condt1); //saida da secao critica, libera a ultima thread caso a thread 2 ja tenha rodado antes
   pthread_exit(NULL);
 }
 
@@ -43,7 +43,7 @@ void *t3 (void *threadid) {
 void *t4 (void *threadid) {
   int *tid = (int*) threadid;
   printf("Seja bem-vindo!\n");
-  sem_post(&condt2t3);
+  sem_post(&condt2t3);//libera T2 ou T3 para rodar, dependendo da ordem da fila
   pthread_exit(NULL);
 }
 
