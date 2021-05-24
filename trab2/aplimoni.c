@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <pthread.h>
 #include "escritaprior.h"
+#include <unistd.h>
 
 typedef struct {
   float temperatura; // varia entre [25, 40]
@@ -17,7 +18,7 @@ typedef struct {
   int id;
 } Argumento;
 
-void* sensores(void* container) {
+void *sensores(void* container) {
   Argumento *arg = (Argumento *) container;
   while(1) {
     entraEscrita(arg->ctrl);
@@ -28,7 +29,7 @@ void* sensores(void* container) {
   }
   pthread_exit(NULL);
 }
-void* atuadores(void* container) {
+void *atuadores(void* container) {
   Argumento *arg = (Argumento *) container;
   int i=0, id, leitura, sequencia_maior_que_35 = 0, possui_maior_que_35 = 0;
   char ultimas_15[15];
@@ -131,8 +132,21 @@ int main(int argc, char** argv) {
       arg[i].onde_escrever = onde_escrever;
       arg[i].buffer = buffer;
       arg[i].id = i/2;
-      if (pthread_create(&tid[i], NULL, ((i%2) == 0) ? sensores : atuadores, (void *) arg[i])) {
-        printf("Erro: pthread_create\n");
+      if((i%2) == 0) {
+        if (pthread_create(&tid[i], NULL, sensores, (void *) &arg[i])) {
+          printf("Erro: pthread_create\n");
+          exit(-1);
+        }
+      } else {
+        if (pthread_create(&tid[i], NULL, atuadores, (void *) &arg[i])) {
+          printf("Erro: pthread_create\n");
+          exit(-1);
+        }
+      }
+    }
+    for (i = 0 ;i < (qtd_threads*2); i++ ) {
+      if(pthread_join(tid[i], NULL)) {
+        printf("Erro: pthread_join");
         exit(-1);
       }
     }
