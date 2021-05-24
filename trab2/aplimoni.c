@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <pthread.h>
 #include "escritaprior.h"
+#include <pthread.h>
 #include <unistd.h>
 
 typedef struct {
@@ -31,7 +31,7 @@ void *sensores(void* container) {
 }
 void *atuadores(void* container) {
   Argumento *arg = (Argumento *) container;
-  int i=0, id, leitura, sequencia_maior_que_35 = 0, possui_maior_que_35 = 0;
+  int i=0, id, leitura, sequencia_maior_que_35 = 0;
   char ultimas_15[15];
   int p_15 = 0;
   int conta_ultimas_15;
@@ -116,7 +116,7 @@ int main(int argc, char** argv) {
     }
     tid = (pthread_t *) malloc(sizeof(pthread_t)*qtd_threads*2);
     arg = (Argumento *) malloc(sizeof(Argumento)*qtd_threads*2);
-    if (arg == NULL || tid == NULL || ctrl == NULL) {
+    if (arg == NULL || tid == NULL) {
       printf("Erro: malloc - Controle");
       exit(-1);
     }

@@ -1,3 +1,5 @@
+#ifndef ESCRITAPRIOR_H
+#define ESCRITAPRIOR_H
 #include <pthread.h>
 
 // paradigma leitura e escrita, com prioridade para escrita
@@ -19,3 +21,5 @@ void entraEscrita(Controle* ctrl);
 void saiEscrita(Controle* ctrl);
 void entraLeitura(Controle* ctrl);
 void saiLeitura(Controle* ctrl);
+
+#endif
