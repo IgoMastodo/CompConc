@@ -14,7 +14,7 @@ typedef struct {
 } Controle;
 
 void inicializaCtrlLeituraEscrita(Controle** ctrl);
-void terminaCtrlLeituraEscrita(Controle** ctrl)
+void terminaCtrlLeituraEscrita(Controle** ctrl);
 void entraEscrita(Controle* ctrl);
 void saiEscrita(Controle* ctrl);
 void entraLeitura(Controle* ctrl);

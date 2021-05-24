@@ -1,3 +1,4 @@
+#include <stdio.h>
 #include <stdlib.h>
 #include <pthread.h>
 #include "escritaprior.h"
@@ -5,6 +6,10 @@
 // Funcao para inicializar a estrutura de controle , os mecanismos de sincronização de threads e variaveis auxiliares para as devidas condicoes
 void inicializaCtrlLeituraEscrita(Controle** ctrl) {
     (*ctrl) = (Controle *) malloc(sizeof(Controle));
+    if(ctrl == NULL) {
+        printf("Erro: malloc - Controle");
+        exit(-1);
+    }
     (*ctrl)->qtd_leitoras = 0;
     (*ctrl)->qtd_escritoras = 0;
     (*ctrl)->querem_escrever = 0;
@@ -36,7 +41,6 @@ void SaiLeitura(Controle* ctrl) {
     if(ctrl->qtd_leitoras == 0) pthread_cond_signal(&(ctrl->cond_escr));
     pthread_mutex_unlock(&(ctrl->totem));
 }
-
 //Funcoes para escrita, no caso eh o sensor, recebem ponteiro para a struct controle 
 void EntraEscrita(Controle* ctrl) {
     pthread_mutex_lock(&(ctrl->totem));
@@ -54,7 +58,7 @@ void SaiEscrita(Controle* ctrl) {
     pthread_mutex_lock(&(ctrl->totem));
     ctrl->qtd_escritoras--;
     // se não possui nenhuma thread querendo escrever no momento da saída da escrita, libera para as threads que querem ler, ou seja, forçando que uma prioridade para escrita a partir da liberação para leitura apenas se não tiver threads querendo escrever
-    if(qtd->querem_escrever == 0) {
+    if(ctrl->querem_escrever == 0) {
       pthread_cond_broadcast(&(ctrl->cond_leit));
     } else {
     // libera para escrita enquanto tiver threads querendo escrever, assim sendo uma prioridade para escrita
