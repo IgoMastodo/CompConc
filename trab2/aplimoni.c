@@ -4,6 +4,8 @@
 #include <pthread.h>
 #include <unistd.h>
 
+pthread_mutex_t bastaoPrint;
+
 typedef struct {
   float temperatura; // varia entre [25, 40]
   int id_sensor;
@@ -20,9 +22,16 @@ typedef struct {
 
 void *sensores(void* container) {
   Argumento *arg = (Argumento *) container;
+  int id_leitura = 0;
   while(1) {
     EntraEscrita(arg->ctrl);
+    id_leitura++;
     arg->buffer[*(arg->onde_escrever)].temperatura = (float) 25.0 + (float)rand()/(float)(RAND_MAX/15);
+    //if (arg->buffer[*(arg->onde_escrever)].temperatura > 35.0) {
+      //printf("\t%d, %f\n",arg->id, arg->buffer[*(arg->onde_escrever)].temperatura);
+    //}
+    arg->buffer[*(arg->onde_escrever)].id_sensor = arg->id;
+    arg->buffer[*(arg->onde_escrever)].id_leitura = id_leitura;
     *(arg->onde_escrever) = (*(arg->onde_escrever)+1)%60;
     SaiEscrita(arg->ctrl);
     sleep(1);
@@ -58,9 +67,11 @@ void *atuadores(void* container) {
       }
       // disparo do alerta vermelho
       if(sequencia_maior_que_35 >= 5) {
+        pthread_mutex_lock(&bastaoPrint);
         printf("\033[0;31m"); 
         printf("Atuador %d: Alerta vermelho!\n", arg->id);
         printf("\033[0m"); 
+        pthread_mutex_unlock(&bastaoPrint);
       }
       // lógica de análise para disparar o alerta amarelo
       if(sequencia_maior_que_35 < 5 && leitura >= 15) {
@@ -71,21 +82,25 @@ void *atuadores(void* container) {
           }
           // disparo do alerta amarelo
           if(conta_ultimas_15 >= 5) {
+            pthread_mutex_lock(&bastaoPrint);
             printf("\033[0;33m"); 
             printf("Atuador %d: Alerta amarelo!\n", arg->id);
             printf("\033[0m"); 
+            pthread_mutex_unlock(&bastaoPrint);
             break;
           }
         }
       // disparo do alerta verde (condição normal)
       } else {
+        pthread_mutex_lock(&bastaoPrint);
         printf("\033[0;32m"); 
         printf("Atuador %d: Normal.\n", arg->id);
         printf("\033[0m");
+        pthread_mutex_unlock(&bastaoPrint);
       }
     }
+    sleep(2);
   }
-  sleep(2);
   pthread_exit(NULL);
 }
 
@@ -105,7 +120,7 @@ int main(int argc, char** argv) {
     Argumento *arg;
     
     if(argc > 1) {
-      qtd_threads = atoi(argv[2]);
+      qtd_threads = atoi(argv[1]);
       if(qtd_threads < 1) {
         como_usar();
         exit(-1);
@@ -125,6 +140,7 @@ int main(int argc, char** argv) {
     *(onde_ler) = 0;
     *(onde_escrever) = 0;
     buffer = (Medida *) malloc(60*sizeof(Medida)); // fixo com valor 60
+    pthread_mutex_init(&bastaoPrint, NULL);
     InicializaCtrlLeituraEscrita(&ctrl);
     for(i = 0 ; i < (qtd_threads*2); i++) {
       arg[i].ctrl = ctrl;
@@ -151,6 +167,7 @@ int main(int argc, char** argv) {
       }
     }
     TerminaCtrlLeituraEscrita(&ctrl);
+    pthread_mutex_destroy(&bastaoPrint);
     free(tid);
     free(arg);
     free(onde_ler);
