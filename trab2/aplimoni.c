@@ -104,14 +104,6 @@ void *atuadores(void* container) {
   pthread_exit(NULL);
 }
 
-void como_usar() {
-  printf("\n");
-  printf("\n");
-  printf("\n");
-  printf("\n");
-  printf("\n");
-}
-
 int main(int argc, char** argv) {
     int qtd_threads, i, *onde_ler, *onde_escrever;
     Controle *ctrl;
@@ -122,11 +114,12 @@ int main(int argc, char** argv) {
     if(argc > 1) {
       qtd_threads = atoi(argv[1]);
       if(qtd_threads < 1) {
-        como_usar();
+        fprintf(stderr,"\nDigite: %s <numero de threads>\n \n", argv[0]);
+        printf("O numero de threads deve ser maior ou igual a 1\n \n");
         exit(-1);
       }
     } else {
-      como_usar();
+      fprintf(stderr,"\nDigite: %s <numero de threads>\n \n", argv[0]);
       exit(-1);
     }
     tid = (pthread_t *) malloc(sizeof(pthread_t)*qtd_threads*2);
