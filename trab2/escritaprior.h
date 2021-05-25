@@ -15,11 +15,11 @@ typedef struct {
     int querem_escrever;
 } Controle;
 
-void inicializaCtrlLeituraEscrita(Controle** ctrl);
-void terminaCtrlLeituraEscrita(Controle** ctrl);
-void entraEscrita(Controle* ctrl);
-void saiEscrita(Controle* ctrl);
-void entraLeitura(Controle* ctrl);
-void saiLeitura(Controle* ctrl);
+void InicializaCtrlLeituraEscrita(Controle** ctrl);
+void TerminaCtrlLeituraEscrita(Controle** ctrl);
+void EntraEscrita(Controle* ctrl);
+void SaiEscrita(Controle* ctrl);
+void EntraLeitura(Controle* ctrl);
+void SaiLeitura(Controle* ctrl);
 
 #endif

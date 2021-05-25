@@ -21,10 +21,10 @@ typedef struct {
 void *sensores(void* container) {
   Argumento *arg = (Argumento *) container;
   while(1) {
-    entraEscrita(arg->ctrl);
+    EntraEscrita(arg->ctrl);
     arg->buffer[*(arg->onde_escrever)].temperatura = (float) 25.0 + (float)rand()/(float)(RAND_MAX/15);
     *(arg->onde_escrever) = (*(arg->onde_escrever)+1)%60;
-    saiEscrita(arg->ctrl);
+    SaiEscrita(arg->ctrl);
     sleep(1);
   }
   pthread_exit(NULL);
@@ -38,12 +38,12 @@ void *atuadores(void* container) {
   float temperatura;
   while(1) {
     /*Regiao de leitura*/
-    entraLeitura(arg->ctrl);
+    EntraLeitura(arg->ctrl);
     id = arg->buffer[*(arg->onde_ler)].id_sensor;
     leitura = arg->buffer[*(arg->onde_ler)].id_leitura;
     temperatura = arg->buffer[*(arg->onde_ler)].temperatura;
     *(arg->onde_ler) = (*(arg->onde_ler)+1) % 60;
-    saiLeitura(arg->ctrl);
+    SaiLeitura(arg->ctrl);
     /*Fim da regiao de leitura*/
     if (arg->id == id) {
       // lógica de análise para disparar o alerta vermelho
@@ -104,7 +104,7 @@ int main(int argc, char** argv) {
     pthread_t *tid;
     Argumento *arg;
     
-    if(argc > 2) {
+    if(argc > 1) {
       qtd_threads = atoi(argv[2]);
       if(qtd_threads < 1) {
         como_usar();
@@ -125,7 +125,7 @@ int main(int argc, char** argv) {
     *(onde_ler) = 0;
     *(onde_escrever) = 0;
     buffer = (Medida *) malloc(60*sizeof(Medida)); // fixo com valor 60
-    inicializaCtrlLeituraEscrita(&ctrl);
+    InicializaCtrlLeituraEscrita(&ctrl);
     for(i = 0 ; i < (qtd_threads*2); i++) {
       arg[i].ctrl = ctrl;
       arg[i].onde_ler = onde_ler;
@@ -150,7 +150,7 @@ int main(int argc, char** argv) {
         exit(-1);
       }
     }
-    terminaCtrlLeituraEscrita(&ctrl);
+    TerminaCtrlLeituraEscrita(&ctrl);
     free(tid);
     free(arg);
     free(onde_ler);

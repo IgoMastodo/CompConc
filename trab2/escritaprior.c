@@ -4,7 +4,7 @@
 #include "escritaprior.h"
 
 // Funcao para inicializar a estrutura de controle , os mecanismos de sincronização de threads e variaveis auxiliares para as devidas condicoes
-void inicializaCtrlLeituraEscrita(Controle** ctrl) {
+void InicializaCtrlLeituraEscrita(Controle** ctrl) {
     (*ctrl) = (Controle *) malloc(sizeof(Controle));
     if(ctrl == NULL) {
         printf("Erro: malloc - Controle");
@@ -19,7 +19,7 @@ void inicializaCtrlLeituraEscrita(Controle** ctrl) {
     pthread_cond_init(&((*ctrl)->cond_escr), NULL);
 }
 // Funcao para desalocar a estrutura de controle e liberar os mecanismos de sincronizacao de threads
-void terminaCtrlLeituraEscrita(Controle** ctrl) {
+void TerminaCtrlLeituraEscrita(Controle** ctrl) {
     pthread_mutex_destroy(&((*ctrl)->totem));
     pthread_cond_destroy(&((*ctrl)->cond_leit));
     pthread_cond_destroy(&((*ctrl)->cond_escr));
